@@ -1,0 +1,405 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- 引入手写风格字体 (ZCOOL KuaiLe) 和 KaTeX/Highlight 样式 -->
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.getElementById('content'),{delimiters: [{left: '$$', right: '$$', display: true},{left: '$', right: '$', display: false}]});"></script>
+</head>
+<body>
+
+  <div class="bg-layer"></div>
+  
+  <div class="notebook-container">
+    <!-- 顶部装饰标题 -->
+    <div class="header-decoration">
+        <div class="title-text">三月七的手账</div>
+        <div class="subtitle-text">✨ 开拓者来帮忙 ✨</div>
+        <!-- 右上角的小花装饰 -->
+        <div class="flower-deco">✿</div>
+    </div>
+
+    <!-- 笔记本主体 -->
+    <div class="paper-sheet">
+        <!-- 左上角日期 (已配置JS自动更新) -->
+        <div class="date-container">
+            <div class="date-label">日期：</div>
+            <div class="date-value" id="current-date">202X/XX/XX</div>
+        </div>
+
+        <!-- 胶带装饰 -->
+        <div class="tape tape-top-right"></div>
+        <div class="tape tape-left-center"></div>
+
+        <!-- 正文内容 -->
+        <article id="content"></article>
+        
+        <!-- 底部小装饰 -->
+        <div class="footer-sticker">
+            (≧∀≦)ゞ
+            <div style="font-size: 0.6em; margin-top: 5px;">开拓者 代笔</div>
+        </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    // 自动获取当前日期并格式化为 YYYY/MM/DD
+    const now = new Date();
+    const dateString = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
+    document.getElementById('current-date').innerText = dateString;
+
+    // 渲染 Markdown
+    const contentElement = document.getElementById('content');
+    contentElement.innerHTML = marked.parse(`# 今天的列车也超——和平！
+
+嘿嘿，三月七，你不在的第 N 天，想你！今天开拓任务超——顺利地完成了，回到列车上发现帕姆竟然在打扫我的房间！还说我再乱丢垃圾就要把我丢进黑洞里……呜哇，超可怕的！
+
+![丹恒戴着心形眼镜的照片](https://upload-bbs.miyoushe.com/upload/2025/04/13/106703484/7ab6729862d9d55c0332657fad77ed2c_4493915310945008208.jpg?x-oss-process=image//resize,s_600/quality,q_80/auto-orient,0/interlace,1/format,jpg)
+
+> “喂，开拓者，记录可以，别把我画得太奇怪。” —— 丹恒是这么说的。
+
+哼哼，他不说我也会把他画得超——帅的！你看这张照片，是不是很有感觉？这是上次在某个星球的庆典上买到的奇怪眼镜，丹恒一开始超——抗拒的，最后还是被我说服戴上了！咔嚓！成就达成！
+
+## 今日待办清单
+
+*   [x] 完成开拓任务
+*   [ ] 整理房间（帕姆监督中…）
+*   [ ] 给三月七的相机充能
+*   [ ] ~~偷喝一杯杨叔的咖啡~~ 品尝一杯杨叔的咖啡
+
+总之，今天也是收获满满的一天！等你回来，我们再一起去拍好多好多照片吧！`);
+
+    // JS 修复：为列表项的文本部分包裹 span，以便单独应用下划线
+    document.querySelectorAll('#content ul li').forEach(li => {
+        const wrapper = document.createElement('span');
+        const nodesToWrap = [];
+        li.childNodes.forEach(node => {
+            if ((node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '') || node.nodeName === 'DEL') {
+                nodesToWrap.push(node);
+            }
+        });
+
+        if (nodesToWrap.length > 0) {
+            li.insertBefore(wrapper, nodesToWrap[0]);
+            nodesToWrap.forEach(node => {
+                wrapper.appendChild(node);
+            });
+        }
+    });
+  </script>
+
+</body>
+</html>
+
+<style>
+    /* 全局基础设置 */
+    html {
+        box-sizing: border-box;
+    }
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+
+    body {
+        margin: 0;
+        padding: 20px;
+        background-color: #f4e4bc;
+        background-image: 
+            radial-gradient(circle at 5% 10%, rgba(255, 255, 255, 0.6) 0%, transparent 20%),
+            radial-gradient(circle at 95% 90%, rgba(255, 255, 255, 0.6) 0%, transparent 20%);
+        font-family: 'ZCOOL KuaiLe', cursive, sans-serif;
+        color: #6d5646;
+        overflow-x: hidden;
+    }
+
+    .notebook-container {
+        max-width: 1000px; /* 稍微减小最大宽度，更紧凑 */
+        margin: 0 auto;
+        position: relative;
+        padding-top: 20px;
+    }
+
+    /* 标题区域 */
+    .header-decoration {
+        text-align: center;
+        margin-bottom: 30px; /* 增加底部间距 */
+        position: relative;
+        text-shadow: 2px 2px 0px #fff, 4px 4px 0px rgba(230, 162, 60, 0.4);
+        z-index: 5;
+    }
+    
+    .title-text {
+        /* 使用 clamp 适配不同屏幕，调小最小值 */
+        font-size: clamp(2.5rem, 10vw, 6rem);
+        color: #e6a23c;
+        transform: rotate(-2deg);
+        display: inline-block;
+        font-weight: bold;
+        letter-spacing: 2px;
+        line-height: 1.2;
+    }
+
+    .subtitle-text {
+        font-size: clamp(1.2rem, 5vw, 2.5rem);
+        color: #fff;
+        background-color: #e6a23c;
+        padding: 5px 15px;
+        border-radius: 25px;
+        display: inline-block;
+        transform: rotate(1.5deg) translateY(0.1em);
+        box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+        border: 3px solid #fff;
+        margin-top: 10px;
+    }
+
+    .flower-deco {
+        font-size: clamp(2rem, 8vw, 5rem);
+        position: absolute;
+        top: 0;
+        right: 10%;
+        color: #a0cfff;
+        opacity: 0.9;
+        animation: float 4s ease-in-out infinite;
+        text-shadow: 2px 2px 0 #fff;
+        z-index: -1; /* 放到后面防止遮挡文字 */
+    }
+
+    /* 纸张区域 */
+    .paper-sheet {
+        background-color: #fffbf0;
+        /* 桌面端 Padding */
+        padding: 100px 50px 50px 50px; 
+        border-radius: 12px 20px 20px 12px;
+        box-shadow: 
+            5px 5px 0px rgba(0,0,0,0.1),
+            inset 20px 0 40px rgba(0,0,0,0.05);
+        position: relative;
+        min-height: 500px;
+        border: 2px solid #eee0c8;
+        /* SVG背景 */
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23e6a23c' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+    }
+
+    .date-container {
+        position: absolute;
+        top: 25px;
+        left: 35px;
+        color: #909399;
+        transform: rotate(-2deg);
+        line-height: 1.2;
+    }
+    .date-label {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #e6a23c;
+    }
+    .date-value {
+        font-size: 1.8rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    /* 胶带样式 */
+    .tape {
+        position: absolute;
+        height: 35px;
+        width: 130px;
+        background-color: rgba(255, 154, 162, 0.6); 
+        opacity: 0.85;
+        box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
+        z-index: 10;
+        mask-image: radial-gradient(circle at 2px 50%, transparent 2px, black 2.5px);
+        mask-size: 10px 100%;
+        mask-position: -5px;
+        mask-repeat: space no-repeat;
+        pointer-events: none; /* 防止遮挡点击 */
+    }
+    
+    .tape-top-right {
+        top: -15px;
+        right: 40px;
+        transform: rotate(40deg);
+        background: repeating-linear-gradient(
+            45deg,
+            #ff9aa2cc,
+            #ff9aa2cc 10px,
+            #ffb7b2cc 10px,
+            #ffb7b2cc 20px
+        );
+    }
+
+    .tape-left-center {
+        top: 150px;
+        left: -20px;
+        width: 90px;
+        transform: rotate(-8deg);
+        background-color: #b5ead7cc;
+        border-top: 1px dashed rgba(255,255,255,0.6);
+        border-bottom: 1px dashed rgba(255,255,255,0.6);
+    }
+
+    /* 内容区域 */
+    #content {
+        font-size: 1.3rem; /* 默认字号 */
+        line-height: 1.8;
+        margin-top: 20px;
+    }
+
+    #content p, #content ul li span {
+        text-decoration: underline dashed #dcdfe6;
+        text-underline-offset: 0.3em;
+    }
+
+    #content > * { margin-bottom: 1.2em; }
+
+    #content h1, #content h2, #content h3 {
+        color: #e6a23c;
+        border: none;
+        text-shadow: 1px 1px 0px #fff;
+        line-height: 1.4;
+    }
+    h1::before { content: "★ "; color: #ff9aa2; }
+    h2::before { content: "♥ "; color: #a0cfff; }
+
+    #content img {
+        max-width: 90%;
+        height: auto;
+        display: block;
+        margin: 10px auto 30px auto;
+        padding: 8px;
+        background-color: #fff;
+        box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+        transform: rotate(-1deg);
+        border: 1px solid #eee;
+    }
+
+    #content blockquote {
+        margin: 0;
+        border-left: none;
+        background: #fff0f6;
+        padding: 1em 1em 1em 2em;
+        border-radius: 12px;
+        color: #8c8c8c;
+        position: relative;
+        font-family: "KaiTi", "STKaiti", serif;
+    }
+    blockquote::before {
+        content: "“";
+        font-size: 3em;
+        color: #ffc0cb;
+        position: absolute;
+        top: -0.1em;
+        left: 0.1em;
+    }
+
+    pre {
+        background: #fdfdfd;
+        padding: 10px;
+        border: 2px dashed #c0c4cc;
+        border-radius: 8px;
+        overflow-x: auto; /* 允许代码块横向滚动 */
+        font-size: 0.9em;
+    }
+
+    #content ul { padding-left: 0.5em; }
+    #content ul li {
+        display: flex;
+        align-items: flex-start; /* 顶部对齐防止图标错位 */
+    }
+    #content ul li::before {
+        content: "✿";
+        color: #ff9aa2;
+        padding-right: 0.4em;
+        flex-shrink: 0;
+    }
+    
+    .footer-sticker {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        text-align: right;
+        margin-top: 40px;
+        color: #909399;
+        transform: rotate(-6deg);
+        opacity: 0.8;
+        font-weight: bold;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+
+    /* =========================================
+       移动端专属适配 (屏幕宽度小于 768px)
+       ========================================= */
+    @media screen and (max-width: 768px) {
+        body {
+            padding: 10px; /* 减小边缘留白 */
+        }
+        
+        .notebook-container {
+            padding-top: 0;
+        }
+
+        .header-decoration {
+            margin-bottom: 20px;
+        }
+
+        /* 修复花朵遮挡 */
+        .flower-deco {
+            font-size: 3rem; 
+            right: 5px;
+            top: -10px;
+            opacity: 0.6;
+        }
+        
+        /* 纸张区域紧凑化 */
+        .paper-sheet {
+            padding: 90px 20px 30px 20px; /* 顶部留出日期空间，两侧变窄 */
+            border-radius: 10px;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+        }
+
+        /* 调整日期位置 */
+        .date-container {
+            top: 20px;
+            left: 20px;
+            transform: rotate(0deg); /* 手机上摆正，省空间 */
+        }
+        .date-label { font-size: 1rem; display: inline-block; }
+        .date-value { font-size: 1.4rem; display: inline-block; }
+
+        /* 隐藏侧边胶带，防止遮挡文字 */
+        .tape-left-center {
+            display: none;
+        }
+
+        .tape-top-right {
+            right: 10px;
+            width: 80px;
+            height: 25px;
+        }
+
+        /* 内容字体适配 */
+        #content {
+            font-size: 1.1rem; /* 稍微减小正文字号 */
+        }
+
+        #content img {
+            max-width: 100%; /* 图片占满宽度 */
+            padding: 4px;
+        }
+        
+        blockquote {
+            padding: 0.8em 0.8em 0.8em 1.8em;
+        }
+    }
+</style>
