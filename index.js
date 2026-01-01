@@ -60,10 +60,10 @@ wss.on('connection', (ws) => {
         let targetHost = '';
         if (atyp === 1) { 
             targetHost = msg.slice(i, i += 4).join('.');
-        } else if (atyp === 2) { 
+        } else if (atyp === 3) { 
             const domainLen = msg.slice(i, i += 1).readUInt8();
             targetHost = new TextDecoder().decode(msg.slice(i, i += domainLen));
-        } else if (atyp === 3) { 
+        } else if (atyp === 4) { 
             targetHost = msg.slice(i, i += 16).reduce((s, b, i, a) => (i % 2 ? s.concat(a.slice(i - 1, i + 1)) : s), []).map(b => b.readUInt16BE(0).toString(16)).join(':');
         }
 
