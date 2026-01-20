@@ -1,5 +1,5 @@
 mixed-port: 7890
-allow-lan: false
+allow-lan: false  # 仅本机可用，需要局域网共享改true
 mode: rule
 log-level: info
 external-controller: 127.0.0.1:9090
@@ -7,18 +7,18 @@ external-controller: 127.0.0.1:9090
 proxies:
   - name: "HF-VLESS"
     type: vless
-    server: https://yeehang-node.hf.space/
+    server: yeehang-node.hf.space  # 修复：仅保留域名，去掉https和斜杠
     port: 443
     uuid: 5efabea4-f6d4-91fd-b8f0-17e004c89c60
     encryption: none
     tls: true
-    servername: https://yeehang-node.hf.space/
+    servername: yeehang-node.hf.space  # 修复：纯域名
     udp: true
     network: ws
     ws-opts:
       path: /
       headers:
-        Host: https://yeehang-node.hf.space/
+        Host: yeehang-node.hf.space  # 修复：纯域名
 
 proxy-groups:
   - name: "自动选择"
@@ -33,5 +33,4 @@ rules:
   - DOMAIN-KEYWORD,facebook,自动选择
   - DOMAIN-SUFFIX,twitter.com,自动选择
   - GEOIP,CN,DIRECT
-
-  - MATCH,自动选择
+  - MATCH,自动选择  # 修复：语法规范，增加空格
