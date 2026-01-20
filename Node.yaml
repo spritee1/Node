@@ -1,36 +1,35 @@
-mixed-port: 7890
-allow-lan: false  # 仅本机可用，需要局域网共享改true
-mode: rule
-log-level: info
-external-controller: 127.0.0.1:9090
+# Clash 核心配置
+mixed-port: 7890          # 混合代理端口（HTTP/HTTPS/SOCKS）
+allow-lan: false          # 关闭局域网访问（更安全）
+mode: rule                # 规则模式（可改为 global 全局代理 / direct 直连）
+log-level: info           # 日志级别
+external-controller: 127.0.0.1:9090  # 控制面板端口
 
+# 代理节点列表（你的 HF-Node 节点放在这里）
 proxies:
-  - name: "HF-VLESS"
+  - name: "HF-Node"
     type: vless
-    server: yeehang-node.hf.space  # 修复：仅保留域名，去掉https和斜杠
+    server: yeehang-node.hf.space
     port: 443
     uuid: 5efabea4-f6d4-91fd-b8f0-17e004c89c60
     encryption: none
-    tls: true
-    servername: yeehang-node.hf.space  # 修复：纯域名
     udp: true
+    tls: true
     network: ws
+    servername: yeehang-node.hf.space
     ws-opts:
       path: /
       headers:
-        Host: yeehang-node.hf.space  # 修复：纯域名
+        Host: yeehang-node.hf.space
 
+# 代理组（用于选择要使用的节点）
 proxy-groups:
-  - name: "自动选择"
-    type: url-test
+  - name: "PROXY"
+    type: select          # 手动选择模式
     proxies:
-      - HF-VLESS
-    url: "http://www.gstatic.com/generate_204"
-    interval: 300
+      - HF-Node           # 包含你的代理节点
+      - DIRECT            # 直连选项（方便切换）
 
+# 规则配置（所有流量走 PROXY 代理组）
 rules:
-  - DOMAIN-SUFFIX,google.com,自动选择
-  - DOMAIN-KEYWORD,facebook,自动选择
-  - DOMAIN-SUFFIX,twitter.com,自动选择
-  - GEOIP,CN,DIRECT
-  - MATCH,自动选择  # 修复：语法规范，增加空格
+  - MATCH,PROXY
