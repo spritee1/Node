@@ -1,0 +1,36 @@
+mixed-port: 7890
+allow-lan: false
+mode: rule
+log-level: info
+external-controller: 127.0.0.1:9090
+
+proxies:
+  - name: "HF-VLESS"
+    type: vless
+    server: https://yeehang-node.hf.space/
+    port: 443
+    uuid: 5efabea4-f6d4-91fd-b8f0-17e004c89c60
+    encryption: none
+    tls: true
+    servername: https://yeehang-node.hf.space/
+    udp: true
+    network: ws
+    ws-opts:
+      path: /
+      headers:
+        Host: https://yeehang-node.hf.space/
+
+proxy-groups:
+  - name: "自动选择"
+    type: url-test
+    proxies:
+      - HF-VLESS
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+
+rules:
+  - DOMAIN-SUFFIX,google.com,自动选择
+  - DOMAIN-KEYWORD,facebook,自动选择
+  - DOMAIN-SUFFIX,twitter.com,自动选择
+  - GEOIP,CN,DIRECT
+  - MATCH,自动选择
